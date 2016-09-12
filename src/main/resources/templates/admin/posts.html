@@ -1,0 +1,57 @@
+#include("./header.html")
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">文章管理</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                文章列表
+            </div>
+            <div class="panel-body">
+
+                <div>
+                    <a href="/admin/post">添加文章</a>
+                </div>
+
+                <div class="table-responsive table-bordered">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>文章标题</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        #for(post : pager.list)
+                        <tr>
+                            <td>${for.index}</td>
+                            <td>${post.title}</td>
+                            <td>${date(post.create_time)}</td>
+                            <td>
+                                <a href="/post/${post.id}">预览</a>
+                                <a href="/admin/posts/${post.id}">编辑</a>
+                                <a href="javascript:void(0)" id="${post.id}">删除</a>
+                            </td>
+                        </tr>
+                        #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+#include("./footer.html")
+</body>
+
+</html>

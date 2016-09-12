@@ -8,21 +8,24 @@ $(function () {
         $(this).removeClass("floating-label-form-group-with-focus");
     });
 
-    var md = new Remarkable({
-        html: false,    // Enable HTML tags in source
-        xhtmlOut: true,    // Use '/' to close single tags (<br />)
-        breaks: false,    // Convert '\n' in paragraphs into <br>
-        langPrefix: 'line-numbers language-',    // CSS language prefix for fenced blocks
-        linkify: true    // Autoconvert URL-like text to links
-    });
+    if(Remarkable){
+        var md = new Remarkable({
+            html: false,    // Enable HTML tags in source
+            xhtmlOut: true,    // Use '/' to close single tags (<br />)
+            breaks: false,    // Convert '\n' in paragraphs into <br>
+            langPrefix: 'line-numbers language-',    // CSS language prefix for fenced blocks
+            linkify: true    // Autoconvert URL-like text to links
+        });
 
-    if($('.post-subtitle').length > 0){
-        $('.post-subtitle').html( md.render($('.post-subtitle').html()) );
+        if($('.post-subtitle').length > 0){
+            $('.post-subtitle').html( md.render($('.post-subtitle').html()) );
+        }
+
+        if($('#post-content').length > 0){
+            $('#post-content').html( md.render($('#post-content').html()) );
+        }
     }
 
-    if($('#post-content').length > 0){
-        $('#post-content').html( md.render($('#post-content').html()) );
-    }
 });
 
 // Navigation Scripts to Show Header on Scroll-Up
@@ -54,3 +57,20 @@ jQuery(document).ready(function ($) {
             });
     }
 });
+
+/**
+ * 登录
+ */
+function signin(){
+$.post('/admin/signin', $(".form-signin").serialize(), function (result) {
+    if(result && result.success){
+        window.location.href = "/admin/index";
+    } else{
+        if(result){
+            alert(result.msg);
+        } else {
+            alert('登录失败');
+        }
+    }
+});
+}

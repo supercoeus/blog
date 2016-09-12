@@ -1,0 +1,58 @@
+#include("./header.html")
+<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">发布文章</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                发布文章
+            </div>
+            <div class="panel-body">
+                <form role="form" onsubmit="return savePost()">
+                    <div class="form-group">
+                        <label>文章标题</label>
+                        <input class="form-control" required aria-required="true" name="title" value="${post.title?!''}"/>
+                        <p class="help-block">请输入文章标题</p>
+                    </div>
+                    <div class="form-group">
+                        <label>文章标签</label>
+                        <input class="form-control" required aria-required="true" name="tags" value="${post.tags?!''}"/>
+                        <p class="help-block">请输入文章标签</p>
+                    </div>
+                    <div class="form-group">
+                        <label>文章内容</label>
+                        <textarea id="post-content" required aria-required="true" class="form-control" rows="3">${post.content?!''}</textarea>
+                        <p class="help-block">请输入文章内容</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-default" onclick="javascript:window.history.go(-1);">取消</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+#include("./footer.html")
+<script>
+    var editor = new Editor({
+        element: document.getElementById('post-content')
+    });
+    editor.render();
+
+    function savePost(){
+
+        return false;
+    }
+</script>
+
+</body>
+</html>

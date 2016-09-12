@@ -2,35 +2,31 @@ package io.biezhi.blog.controller.admin;
 
 import com.blade.ioc.annotation.Inject;
 import com.blade.jdbc.Paginator;
-import com.blade.kit.DateKit;
 import com.blade.mvc.annotation.*;
 import com.blade.mvc.http.HttpMethod;
-import com.blade.mvc.http.Response;
 import com.blade.mvc.view.ModelAndView;
-import io.biezhi.blog.config.Constant;
 import io.biezhi.blog.model.Post;
+import io.biezhi.blog.model.PostTag;
 import io.biezhi.blog.model.RestResponse;
-import io.biezhi.blog.model.User;
+import io.biezhi.blog.model.Tag;
 import io.biezhi.blog.service.PostService;
 import io.biezhi.blog.service.UserService;
-import io.biezhi.blog.util.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Date;
+import java.util.List;
 
 @Controller("admin")
-public class MainController {
+public class PostController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
 
     @Inject
     private UserService userService;
 
     @Inject
     private PostService postService;
-
 
     /**
      * 文章列表
@@ -43,22 +39,31 @@ public class MainController {
     public ModelAndView posts(ModelAndView mav, @RequestParam(value = "p", defaultValue = "1") int page){
         Paginator<Post> pager = postService.queryPost(page, 10);
         mav.add("pager", pager);
-        mav.setView("posts");
+        mav.setView("admin/posts");
+        return mav;
+    }
+
+    @Route(value = "post", method = HttpMethod.GET)
+    public ModelAndView addPost(ModelAndView mav){
+        mav.setView("admin/edit_post");
         return mav;
     }
 
     /**
-     * 文章详情
+     * 编辑文章
      *
      * @param mav
      * @param id
      * @return
      */
-    @Route(value = "post/:id", method = HttpMethod.GET)
+    @Route(value = "posts/:id", method = HttpMethod.GET)
     public ModelAndView post(ModelAndView mav, @PathVariable("id") int id){
         Post post = postService.query(id);
+
+        List<Tag> tags = Tag.db.sql("select a.name from t_tag a left join t_post_tag b on a.id = b.tid left join t_post c on b.pid = c.id").where("c.id", id).list();
+        mav.add("tags", tags);
         mav.add("post", post);
-        mav.setView("post");
+        mav.setView("admin/edit_post");
         return mav;
     }
 
@@ -75,7 +80,7 @@ public class MainController {
     @JSON
     public RestResponse<String> post(@RequestParam String title,
                                      @RequestParam String intro,
-                                     @RequestParam String tags,
+                                    @RequestParam String tags,
                                      @RequestParam String content){
         RestResponse<String> restResponse = new RestResponse<String>();
 

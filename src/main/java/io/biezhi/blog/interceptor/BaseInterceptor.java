@@ -12,14 +12,14 @@ public class BaseInterceptor implements Interceptor {
 
     @Override
     public boolean before(Request request, Response response) {
-        String uri = request.uri();
+       /* String uri = request.uri();
         if(uri.startsWith("/admin") && !uri.equals("/admin/signin")){
             User user = SessionUtil.getUser();
             if(null == user){
                 response.go("/admin/signin");
                 return false;
             }
-        }
+        }*/
         return true;
     }
 

@@ -21,6 +21,17 @@ public class IndexController {
     private UserService userService;
 
     /**
+     * 后台首页
+     * @param mav
+     * @return
+     */
+    @Route(value = "index", method = HttpMethod.GET)
+    public ModelAndView index(ModelAndView mav){
+        mav.setView("admin/index");
+        return mav;
+    }
+
+    /**
      * 登录
      * @param user_name
      * @param pass_word
