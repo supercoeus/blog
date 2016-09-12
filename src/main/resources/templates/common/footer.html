@@ -1,0 +1,29 @@
+<hr>
+<!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="social">
+					#if(null!=sys_info.social_github)
+					<a class="github" target="_blank" href="https://github.com/${sys_info.social_github}" title="github">github</a>
+					#end
+					#if(null!=sys_info.social_weibo)
+					<a class="weibo" target="_blank" href="http://weibo.com/${sys_info.social_weibo}" title="weibo">weibo</a>
+					#end
+					#if(null!=sys_info.social_zhihu)
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/${sys_info.social_zhihu}" title="zhihu">zhihu</a>
+					#end
+				</div>
+				<p class="copyright text-muted">Copyright &copy; Blade Blog 2016</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<!-- jQuery -->
+<script src="/static/js/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- Theme JavaScript -->
+<script src="/static/js/clean-blog.js"></script>

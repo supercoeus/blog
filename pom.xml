@@ -9,10 +9,10 @@
         <artifactId>blade-starter</artifactId>
         <version>0.0.1</version>
     </parent>
-
+	
     <artifactId>blog</artifactId>
     <version>0.0.2</version>
-
+	
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mysql.version>5.1.38</mysql.version>
@@ -48,6 +48,7 @@
         <dependency>
             <groupId>com.bladejava</groupId>
             <artifactId>blade-jdbc</artifactId>
+            <version>0.1.3-beta</version>
         </dependency>
 
         <dependency>
