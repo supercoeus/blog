@@ -1,16 +1,32 @@
 // Floating label headings for the contact form
-$(function() {
-    $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+$(function () {
+    $("body").on("input propertychange", ".floating-label-form-group", function (e) {
         $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
-    }).on("focus", ".floating-label-form-group", function() {
+    }).on("focus", ".floating-label-form-group", function () {
         $(this).addClass("floating-label-form-group-with-focus");
-    }).on("blur", ".floating-label-form-group", function() {
+    }).on("blur", ".floating-label-form-group", function () {
         $(this).removeClass("floating-label-form-group-with-focus");
     });
+
+    var md = new Remarkable({
+        html: false,    // Enable HTML tags in source
+        xhtmlOut: true,    // Use '/' to close single tags (<br />)
+        breaks: false,    // Convert '\n' in paragraphs into <br>
+        langPrefix: 'line-numbers language-',    // CSS language prefix for fenced blocks
+        linkify: true    // Autoconvert URL-like text to links
+    });
+
+    if($('.post-subtitle').length > 0){
+        $('.post-subtitle').html( md.render($('.post-subtitle').html()) );
+    }
+
+    if($('#post-content').length > 0){
+        $('#post-content').html( md.render($('#post-content').html()) );
+    }
 });
 
 // Navigation Scripts to Show Header on Scroll-Up
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     var MQL = 1170;
 
     //primary navigation slide-in effect
@@ -19,7 +35,7 @@ jQuery(document).ready(function($) {
         $(window).on('scroll', {
                 previousTop: 0
             },
-            function() {
+            function () {
                 var currentTop = $(window).scrollTop();
                 //check if user is scrolling up
                 if (currentTop < this.previousTop) {
