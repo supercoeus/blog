@@ -1,0 +1,49 @@
+#include("./common/header.html")
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('/static/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>${sys_info.site_title}</h1>
+                    <hr class="small">
+                    <span class="subheading">${sys_info.site_subtitle}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <ul>
+                #for(post : pager.list)
+                <li>
+                    <a href="/post/${post.id}">${post.title}</a>
+                    <span class="post-meta">发布于 ${date(post.create_time)}</span>
+                </li>
+                #end
+            </ul>
+            
+            <!-- Pager -->
+            <ul class="pager">
+            	#if(pager.hasPrevPage)
+            	<li class="prev">
+                    <a href="/?p=${pager.prevPage}">上一页 &rarr;</a>
+                </li>
+            	#end
+            	#if(pager.hasNextPage)
+            	<li class="next">
+                    <a href="/?p=${pager.nextPage}">下一页 &rarr;</a>
+                </li>
+            	#end
+            </ul>
+        </div>
+    </div>
+</div>
+#include("./common/footer.html")
+</body>
+</html>

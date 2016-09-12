@@ -2,8 +2,11 @@ package io.biezhi.blog.service.impl;
 
 import com.blade.ioc.annotation.Service;
 import com.blade.jdbc.Paginator;
-import io.biezhi.blog.service.PostService;
+import com.blade.kit.StringKit;
 import io.biezhi.blog.model.Post;
+import io.biezhi.blog.model.PostTag;
+import io.biezhi.blog.model.Tag;
+import io.biezhi.blog.service.PostService;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -23,4 +26,23 @@ public class PostServiceImpl implements PostService {
     public Post query(int id) {
         return Post.db.findById(id);
     }
+
+    @Override
+    public void saveTag(int pid, String tags) {
+        // 1. 删除pid的tags
+        PostTag.db.where("pid", pid).delete();
+        // 2. 添加tags
+        String[] tagarr = StringKit.split(tags, ",");
+        if(null != tagarr && tagarr.length > 0){
+            PostTag postTag = new PostTag();
+            for(String tag : tagarr){
+                Tag tagObj = Tag.db.where("name = ?", tag).findOne();
+                if(null != tagObj){
+                    postTag.set("pid", pid).set("tid", tagObj.getInt("id")).addToBatch();
+                }
+            }
+            postTag.saveBatch();
+        }
+    }
+
 }
