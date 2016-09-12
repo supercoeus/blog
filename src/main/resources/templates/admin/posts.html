@@ -37,7 +37,7 @@
                             <td>
                                 <a href="/post/${post.id}">预览</a>
                                 <a href="/admin/posts/${post.id}">编辑</a>
-                                <a href="javascript:void(0)" id="${post.id}">删除</a>
+                                <a class="del-post" href="javascript:void(0)" id="${post.id}">删除</a>
                             </td>
                         </tr>
                         #end
@@ -48,10 +48,25 @@
         </div>
     </div>
 </div>
-<!-- /#page-wrapper -->
 </div>
-<!-- /#wrapper -->
 #include("./footer.html")
+<script>
+    $('.del-post').on('click', function () {
+       if(window.confirm('确定要删除吗？')){
+           var id = $(this).attr('id');
+           $.post('/admin/post/delete/' + id, {}, function (result) {
+              if(result){
+                  if(result.success){
+                      window.location.reload();
+                  } else {
+                      alert(result.msg);
+                  }
+              } else {
+                  alert('删除失败');
+              }
+           });
+       }
+    });
+</script>
 </body>
-
 </html>

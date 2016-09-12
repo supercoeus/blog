@@ -8,5 +8,4 @@ public class Post extends Model {
 	
 	private static final long serialVersionUID = 2357728701020794948L;
 	
-	public static Post db = new Post();
 }

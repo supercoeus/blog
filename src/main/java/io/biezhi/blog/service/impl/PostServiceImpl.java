@@ -16,12 +16,15 @@ public class PostServiceImpl implements PostService {
         if(limit < 1 || limit > 20){
             limit = 10;
         }
-        return Post.db.sql("select id, title, intro, tags, create_time from t_post").where("status = ?", 1).page(page, limit);
+        return new Post().sql("select id, title, intro, tags, create_time from t_post")
+                .where("status = ?", 1)
+                .order("create_time desc")
+                .page(page, limit);
     }
 
     @Override
     public Post query(int id) {
-        return Post.db.findById(id);
+        return new Post().findById(id);
     }
 
 

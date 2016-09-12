@@ -8,5 +8,4 @@ public class Options extends Model {
 	
 	private static final long serialVersionUID = -7008781428345929578L;
 
-	public static Options db = new Options();
 }

@@ -2,6 +2,7 @@ package io.biezhi.blog.controller.admin;
 
 import com.blade.ioc.annotation.Inject;
 import com.blade.jdbc.Paginator;
+import com.blade.kit.DateKit;
 import com.blade.mvc.annotation.*;
 import com.blade.mvc.http.HttpMethod;
 import com.blade.mvc.view.ModelAndView;
@@ -74,9 +75,8 @@ public class PostController {
     @Route(value = "post", method = HttpMethod.POST)
     @JSON
     public RestResponse<String> post(
-                                    @RequestParam Integer id,
+                                    @RequestParam(required = false, value = "id", defaultValue = "0") Integer id,
                                     @RequestParam String title,
-                                    @RequestParam String intro,
                                     @RequestParam String tags,
                                     @RequestParam String content){
 
@@ -85,12 +85,17 @@ public class PostController {
         try {
             Post post = new Post();
             post.set("title", title);
-            post.set("intro", intro);
             post.set("tags", tags);
             post.set("content", content);
-            post.set("create_time", new Date());
+            post.set("create_time", DateKit.getCurrentUnixTime());
 
-            if(null != id){
+            if(content.length() > 200){
+                post.set("intro", content.substring(0, 200));
+            } else {
+                post.set("intro", content);
+            }
+
+            if(null != id && id != 0){
                 post.where("id", id).update();
             } else {
                 post.save();

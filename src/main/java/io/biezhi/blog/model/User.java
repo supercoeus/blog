@@ -8,5 +8,4 @@ public class User extends Model {
 	
 	private static final long serialVersionUID = 2357728701020794948L;
 	
-	public static User db = new User();
 }

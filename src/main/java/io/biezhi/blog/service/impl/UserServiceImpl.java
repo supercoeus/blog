@@ -17,6 +17,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User signin(String username, String password) {
         password = EncrypKit.md5(username + password);
-        return User.db.where("user_name = ? and pass_word = ? and status = ?", username, password, 1).findOne();
+        return new User().where("user_name = ? and pass_word = ? and status = ?", username, password, 1).findOne();
     }
 }

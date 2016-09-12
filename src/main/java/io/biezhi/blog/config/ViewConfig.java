@@ -29,7 +29,7 @@ public class ViewConfig implements BaseConfig{
 		// 模板引擎
 		Constant.VIEW_CONTEXT = templateEngine.getJetEngine().getGlobalContext();
 		
-		List<Options> options = Options.db.all();
+		List<Options> options = new Options().all();
 		Map<String, String> sysInfo = new HashMap<String, String>(options.size());
 		for(Options option : options){
 			sysInfo.put(option.getString("key"), option.getString("value"));

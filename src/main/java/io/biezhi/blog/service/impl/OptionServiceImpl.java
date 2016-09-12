@@ -14,7 +14,7 @@ public class OptionServiceImpl implements OptionService {
 
 	@Override
 	public Map<String, String> getOptions() {
-		List<Options> options = Options.db.all();
+		List<Options> options = new Options().all();
 		Map<String, String> map = new HashMap<String, String>(options.size());
 		for(Options option : options){
 			map.put(option.getString("key"), option.getString("value"));

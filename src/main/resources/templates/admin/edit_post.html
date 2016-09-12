@@ -17,24 +17,24 @@
                 发布文章
             </div>
             <div class="panel-body">
-                <form id="post-form" role="form" onsubmit="return savePost()">
+                <form id="post-form" role="form">
                     <input type="hidden" name="id" value="${post.id ?! ''}" />
                     <div class="form-group">
                         <label>文章标题</label>
-                        <input class="form-control" required aria-required="true" name="title" value="${post.title?!''}"/>
+                        <input class="form-control" id="title" name="title" value="${post.title?!''}"/>
                         <p class="help-block">请输入文章标题</p>
                     </div>
                     <div class="form-group">
                         <label>文章标签</label>
-                        <input class="form-control" required aria-required="true" name="tags" value="${post.tags?!''}"/>
+                        <input class="form-control" name="tags" value="${post.tags?!''}"/>
                         <p class="help-block">请输入文章标签</p>
                     </div>
                     <div class="form-group">
                         <label>文章内容</label>
-                        <textarea id="post-content" required aria-required="true" class="form-control" rows="3">${post.content?!''}</textarea>
+                        <textarea id="post-content" name="content" class="form-control" rows="3">${post.content?!''}</textarea>
                         <p class="help-block">请输入文章内容</p>
                     </div>
-                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-primary" onclick="savePost()">保存</button>
                     <button type="button" class="btn btn-default" onclick="javascript:window.history.go(-1);">取消</button>
                 </form>
             </div>
@@ -50,6 +50,14 @@
     editor.render();
 
     function savePost(){
+        if($('#title').val() == ''){
+            alert('请输入文章标题');
+            return false;
+        }
+        if($('#content').val() == ''){
+            alert('请输入文章内容');
+            return false;
+        }
         $('#post-content').val(editor.codemirror.getValue());
         $.post('/admin/post', $("#post-form").serialize(), function (result) {
             if(result){
