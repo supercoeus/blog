@@ -17,7 +17,8 @@
                 发布文章
             </div>
             <div class="panel-body">
-                <form role="form" onsubmit="return savePost()">
+                <form id="post-form" role="form" onsubmit="return savePost()">
+                    <input type="hidden" name="id" value="${post.id ?! ''}" />
                     <div class="form-group">
                         <label>文章标题</label>
                         <input class="form-control" required aria-required="true" name="title" value="${post.title?!''}"/>
@@ -49,7 +50,19 @@
     editor.render();
 
     function savePost(){
-
+        $('#post-content').val(editor.codemirror.getValue());
+        $.post('/admin/post', $("#post-form").serialize(), function (result) {
+            if(result){
+                if(result.success){
+                    alert('保存成功');
+                    window.location.href = '/admin/posts';
+                } else{
+                    alert(result.msg);
+                }
+            } else{
+                alert('文章保存失败');
+            }
+        });
         return false;
     }
 </script>

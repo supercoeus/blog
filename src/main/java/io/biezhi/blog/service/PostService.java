@@ -9,5 +9,4 @@ public interface PostService {
 
     Post query(int id);
 
-    void saveTag(int pid, String tags);
 }
